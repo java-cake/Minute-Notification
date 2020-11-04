@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                         if (counter == minute){
                             minute *= 2;
                             ++counterBip;
-                            while (--counterBip != 0){
+                            while (counterBip-- != 0){
                                 // Bip
                             }
                         }
