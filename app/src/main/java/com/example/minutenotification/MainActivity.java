@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import static java.lang.Thread.sleep;
 public class MainActivity extends AppCompatActivity {
     private TextView txtTime;
     private Button btnStart;
+    private Button btnStop;
     private String formattedDate;
     private Thread myThread = null;
     private Runnable runnable = null;
@@ -70,10 +72,18 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
+            }
+        });
     }
     private void findId(){
         txtTime = findViewById(R.id.txtTime);
         btnStart = findViewById(R.id.btnStart);
+        btnStop = findViewById(R.id.btnStop);
     }
     public void doWork() {
         runOnUiThread(new Runnable() {
@@ -92,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     class CountDownRunner implements Runnable{
         public void run() {
             while(!Thread.currentThread().isInterrupted()){
