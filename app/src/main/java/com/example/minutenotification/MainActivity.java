@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,12 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private Thread myThread = null;
     private Runnable runnable = null;
     private ToneGenerator toneGenerator = null;
+    private final Handler handler = null;
     private int volumeLevel = 1000;
     private int counter = 0;
     private int counterBeep = 0;
-    private int countTemp = 0;
+    private int countTemporary = 0;
     private int minute = 600;
-    private int duration = 1500;
+    private int minuteRepeat = 600;
+    private int duration = 500;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,19 +49,19 @@ public class MainActivity extends AppCompatActivity {
                     public void onTick(long millisUntilFinished) {
                         counter++;
                         if (counter == minute){
-                            minute += 600;
+                            minute += minuteRepeat;
                             ++counterBeep;
-                            countTemp = counterBeep;
+                            countTemporary = counterBeep;
                             while (counterBeep-- != 0){
                                 toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, volumeLevel);
-                                toneGenerator.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, duration);
+                                toneGenerator.startTone(ToneGenerator.TONE_DTMF_S, duration);
                                 try {
-                                    sleep(990);
+                                    sleep(1000);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                             }
-                            counterBeep = countTemp;
+                            counterBeep = countTemporary;
                         }
                     }
                     @Override
