@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,14 +25,15 @@ public class MainActivity extends AppCompatActivity {
     private Thread myThread = null;
     private Runnable runnable = null;
     private ToneGenerator toneGenerator = null;
-    private int volumeLevel = 1000;
+    private int volumeLevel = 1500;
     private int counter = 0;
     private int counterBeep = 0;
     private int counterTemp = 0;
-    private int minute = 600;
-    private int minuteRepeat = 600;
+    private int second = 600;
+    private int secondRepeat = 600;
     private int duration = 500;
     private int delay1 = 1000;
+    private int delay2 = 500;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,19 +46,21 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Bắt đầu thông báo phút", Toast.LENGTH_LONG).show();
+                btnStart.setEnabled(false);
                 new CountDownTimer(86400000,1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         counter++;
-                        if (counter == minute){
-                            minute += minuteRepeat;
+                        if (counter == second){
+                            second += secondRepeat;
                             ++counterBeep;
                             counterTemp = counterBeep;
                             while (counterBeep-- != 0){
                                 toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, volumeLevel);
                                 toneGenerator.startTone(ToneGenerator.TONE_DTMF_S, duration);
                                 try {
-                                    sleep(delay1);
+                                    sleep(delay2);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -67,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFinish() {
                         counter = 0;
+                        btnStart.setEnabled(true);
                     }
                 }.start();
-
             }
         });
         btnStop.setOnClickListener(new View.OnClickListener() {
