@@ -22,7 +22,7 @@
         android:layout_height="55dp"
         android:background="#0366D6"
         android:textColor="#FFFFFF"
-        android:text="Bắt đầu báo số phút"
+        android:text="Bắt đầu thông báo phút"
         />
 
   </LinearLayout >

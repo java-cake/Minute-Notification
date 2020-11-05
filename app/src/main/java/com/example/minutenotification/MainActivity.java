@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private int minute = 600;
     private int minuteRepeat = 600;
     private int duration = 500;
+    private int delay1 = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                                 toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, volumeLevel);
                                 toneGenerator.startTone(ToneGenerator.TONE_DTMF_S, duration);
                                 try {
-                                    sleep(1000);
+                                    sleep(delay1);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             while(!Thread.currentThread().isInterrupted()){
                 try {
                     doWork();
-                    sleep(1000);
+                    sleep(delay1);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }catch(Exception e){
