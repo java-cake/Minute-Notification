@@ -6,11 +6,9 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,11 +22,10 @@ public class MainActivity extends AppCompatActivity {
     private Thread myThread = null;
     private Runnable runnable = null;
     private ToneGenerator toneGenerator = null;
-    private final Handler handler = null;
     private int volumeLevel = 1000;
     private int counter = 0;
     private int counterBeep = 0;
-    private int countTemporary = 0;
+    private int counterTemp = 0;
     private int minute = 600;
     private int minuteRepeat = 600;
     private int duration = 500;
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                         if (counter == minute){
                             minute += minuteRepeat;
                             ++counterBeep;
-                            countTemporary = counterBeep;
+                            counterTemp = counterBeep;
                             while (counterBeep-- != 0){
                                 toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, volumeLevel);
                                 toneGenerator.startTone(ToneGenerator.TONE_DTMF_S, duration);
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }
-                            counterBeep = countTemporary;
+                            counterBeep = counterTemp;
                         }
                     }
                     @Override
